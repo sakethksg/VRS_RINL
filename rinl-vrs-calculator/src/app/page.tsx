@@ -3,7 +3,12 @@
 import { useState } from "react";
 import { CalculatorForm } from "@/components/calculator-form";
 import { ResultsDisplay } from "@/components/results-display";
+import { ScenarioComparison } from "@/components/scenario-comparison";
+import { CompensationBreakdownChart } from "@/components/compensation-breakdown-chart";
+import { PayoutVsAgeChart } from "@/components/payout-vs-age-chart";
+import { InvestmentSimulator } from "@/components/investment-simulator";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { calculateVRSCompensation } from "@/lib/calculations";
 import type { VRSCalculationInput, VRSCalculationResult } from "@/types";
 
@@ -105,6 +110,38 @@ export default function Home() {
               )}
             </div>
           </div>
+
+          {/* Advanced Analysis Section - Only show when results are available */}
+          {result && (
+            <div className="mt-8 sm:mt-12 space-y-6 sm:space-y-8">
+              <Separator className="my-6 sm:my-8" />
+              
+              {/* Section Header */}
+              <div className="text-center">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2">Advanced Analysis Tools</h2>
+                <p className="text-muted-foreground text-sm sm:text-base max-w-2xl mx-auto">
+                  Use these tools to make an informed decision about your VRS
+                </p>
+              </div>
+
+              {/* Scenario Comparison */}
+              <ScenarioComparison input={result.input} />
+
+              {/* Compensation Breakdown Chart */}
+              <CompensationBreakdownChart result={result} />
+
+              {/* Payout vs Age Analysis */}
+              <PayoutVsAgeChart
+                currentAge={result.currentAge}
+                retirementAge={58}
+                vrsAmount={result.totalCompensation}
+                monthlySalary={result.monthlySalary}
+              />
+
+              {/* Investment Simulator */}
+              <InvestmentSimulator vrsAmount={result.totalCompensation + result.noticePay} />
+            </div>
+          )}
         </div>
       </main>
 

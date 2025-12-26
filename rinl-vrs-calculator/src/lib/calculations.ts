@@ -40,7 +40,16 @@ export function calculateVRSCompensation(input: VRSCalculationInput): VRSCalcula
   // Notice Pay (30 days)
   const noticePay = 30 * dailySalary;
   
+  // Calculate current age
+  const currentAge = differenceInMonths(releaseDate, input.dateOfBirth) / 12;
+  
+  // Calculate monthly salary
+  const monthlySalary = currentSalary;
+  
   return {
+    input,
+    currentAge,
+    monthlySalary,
     totalBasicPay,
     currentSalary,
     dailySalary,

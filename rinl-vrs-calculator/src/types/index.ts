@@ -9,6 +9,9 @@ export interface VRSCalculationInput {
 }
 
 export interface VRSCalculationResult {
+  input: VRSCalculationInput;
+  currentAge: number;
+  monthlySalary: number;
   totalBasicPay: number;
   currentSalary: number;
   dailySalary: number;
