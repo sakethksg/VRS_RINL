@@ -151,24 +151,29 @@ export function InvestmentSimulator({ vrsAmount }: InvestmentSimulatorProps) {
         {/* Growth Chart */}
         <div>
           <h4 className="font-semibold mb-3 text-sm sm:text-base">Investment Growth Over Time</h4>
-          <div className="w-full h-[300px] sm:h-[350px]">
+          <div className="w-full h-[350px] sm:h-[400px]">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={chartData}>
+              <LineChart data={chartData} margin={{ top: 5, right: 20, bottom: 20, left: 10 }}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
                   dataKey="year" 
-                  label={{ value: 'Years', position: 'insideBottom', offset: -5, style: { fontSize: '12px' } }}
-                  style={{ fontSize: '12px' }}
+                  label={{ value: 'Years', position: 'insideBottom', offset: -10, style: { fontSize: '11px' } }}
+                  style={{ fontSize: '11px' }}
+                  tick={{ dy: 5 }}
                 />
                 <YAxis 
                   tickFormatter={(value) => `₹${(value / 100000).toFixed(1)}L`}
-                  style={{ fontSize: '12px' }}
+                  style={{ fontSize: '11px' }}
+                  width={65}
                 />
                 <Tooltip 
                   formatter={(value) => formatCurrency(Number(value))}
-                  contentStyle={{ fontSize: '12px' }}
+                  contentStyle={{ fontSize: '11px' }}
                 />
-                <Legend wrapperStyle={{ fontSize: '12px' }} />
+                <Legend 
+                  wrapperStyle={{ fontSize: '11px', paddingTop: '10px' }}
+                  iconSize={10}
+                />
                 <Line type="monotone" dataKey="Fixed Deposit" stroke="#f97316" strokeWidth={2} />
                 <Line type="monotone" dataKey="Mutual Fund" stroke="#3b82f6" strokeWidth={2} />
               </LineChart>

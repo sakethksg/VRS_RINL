@@ -183,6 +183,9 @@ export function CalculatorForm({ onCalculate }: CalculatorFormProps) {
                         date > new Date() || date < new Date("1960-01-01")
                       }
                       initialFocus
+                      captionLayout="dropdown"
+                      fromYear={1960}
+                      toYear={new Date().getFullYear()}
                     />
                   </PopoverContent>
                 </Popover>
@@ -226,6 +229,9 @@ export function CalculatorForm({ onCalculate }: CalculatorFormProps) {
                         date > new Date() || date < new Date("1940-01-01")
                       }
                       initialFocus
+                      captionLayout="dropdown"
+                      fromYear={1940}
+                      toYear={new Date().getFullYear()}
                     />
                   </PopoverContent>
                 </Popover>
@@ -267,6 +273,9 @@ export function CalculatorForm({ onCalculate }: CalculatorFormProps) {
                       onSelect={field.onChange}
                       disabled={(date) => date < new Date("1960-01-01")}
                       initialFocus
+                      captionLayout="dropdown"
+                      fromYear={new Date().getFullYear()}
+                      toYear={2030}
                     />
                   </PopoverContent>
                 </Popover>
