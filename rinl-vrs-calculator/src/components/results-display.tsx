@@ -151,15 +151,6 @@ export function ResultsDisplay({ result }: ResultsDisplayProps) {
           </div>
         </CardContent>
       </Card>
-
-      {/* Print Instructions */}
-      <Card className="bg-muted/50">
-        <CardContent className="pt-4 sm:pt-6 px-4">
-          <p className="text-xs sm:text-sm text-muted-foreground text-center">
-            💡 Use your browser's print function (Ctrl+P / Cmd+P) to save or print this calculation
-          </p>
-        </CardContent>
-      </Card>
     </div>
   );
 }

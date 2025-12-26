@@ -105,17 +105,6 @@ export default function Home() {
               )}
             </div>
           </div>
-
-          {/* Footer Note */}
-          <Card className="mt-4 sm:mt-6 lg:mt-8 border-amber-200 bg-amber-50 dark:bg-amber-950/20">
-            <CardContent className="pt-4 sm:pt-6 px-3 sm:px-6">
-              <p className="text-xs sm:text-sm text-center text-muted-foreground">
-                ⚠️ <strong>Disclaimer:</strong> This calculator provides an estimate based on the Gujarat Pattern formula. 
-                Actual VRS benefits may vary based on company policy, government regulations, and individual circumstances. 
-                Please consult with HR department for official calculations.
-              </p>
-            </CardContent>
-          </Card>
         </div>
       </main>
 
