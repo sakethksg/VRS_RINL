@@ -23,18 +23,18 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
       {/* Header */}
       <header className="bg-primary text-primary-foreground shadow-lg">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
+        <div className="container mx-auto px-4 py-4 sm:py-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div>
-              <h1 className="text-3xl font-bold">RINL VRS Calculator</h1>
-              <p className="text-sm opacity-90 mt-1">
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold">RINL VRS Calculator</h1>
+              <p className="text-xs sm:text-sm opacity-90 mt-1">
                 Rashtriya Ispat Nigam Limited - Voluntary Retirement Scheme
               </p>
             </div>
-            <div className="hidden md:block">
+            <div className="hidden lg:block">
               <div className="text-right">
-                <div className="text-lg font-semibold">Visakhapatnam Steel Plant</div>
-                <div className="text-sm opacity-90">A Govt. of India Enterprise</div>
+                <div className="text-base lg:text-lg font-semibold">Visakhapatnam Steel Plant</div>
+                <div className="text-xs lg:text-sm opacity-90">A Govt. of India Enterprise</div>
               </div>
             </div>
           </div>
@@ -42,13 +42,13 @@ export default function Home() {
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 lg:py-8">
         <div className="max-w-7xl mx-auto">
           {/* Introduction */}
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle>Calculate Your VRS Compensation</CardTitle>
-              <CardDescription>
+          <Card className="mb-4 sm:mb-6 lg:mb-8">
+            <CardHeader className="pb-3 sm:pb-6">
+              <CardTitle className="text-lg sm:text-xl lg:text-2xl">Calculate Your VRS Compensation</CardTitle>
+              <CardDescription className="text-xs sm:text-sm">
                 This calculator helps you estimate your Voluntary Retirement Scheme benefits based on the Gujarat Pattern. 
                 Enter your salary details and dates to get an instant calculation.
               </CardDescription>
@@ -56,25 +56,25 @@ export default function Home() {
           </Card>
 
           {/* Two Column Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
             {/* Left Column - Form */}
             <div>
               <Card>
-                <CardHeader>
-                  <CardTitle>Employee Details</CardTitle>
-                  <CardDescription>Fill in your current salary and service information</CardDescription>
+                <CardHeader className="pb-3 sm:pb-6">
+                  <CardTitle className="text-base sm:text-lg lg:text-xl">Employee Details</CardTitle>
+                  <CardDescription className="text-xs sm:text-sm">Fill in your current salary and service information</CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="px-3 sm:px-6">
                   <CalculatorForm onCalculate={handleCalculate} />
                 </CardContent>
               </Card>
 
               {/* Information Card */}
-              <Card className="mt-6 bg-blue-50 dark:bg-blue-950/30">
-                <CardHeader>
-                  <CardTitle className="text-base">How is it calculated?</CardTitle>
+              <Card className="mt-4 sm:mt-6 bg-blue-50 dark:bg-blue-950/30">
+                <CardHeader className="pb-3 sm:pb-6">
+                  <CardTitle className="text-sm sm:text-base">How is it calculated?</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-2 text-sm">
+                <CardContent className="space-y-2 text-xs sm:text-sm px-3 sm:px-6">
                   <p>
                     <strong>Gujarat Pattern:</strong> 35 days salary for each completed year of service + 
                     25 days salary for each year of remaining service (until superannuation at 58 years)
@@ -94,11 +94,11 @@ export default function Home() {
               {result ? (
                 <ResultsDisplay result={result} />
               ) : (
-                <Card className="h-full flex items-center justify-center">
-                  <CardContent className="text-center py-12">
-                    <h3 className="text-xl font-semibold mb-2">Ready to Calculate</h3>
-                    <p className="text-muted-foreground max-w-md">
-                      Fill in the form on the left and click "Calculate VRS Compensation" to see your results here.
+                <Card className="h-full flex items-center justify-center min-h-[200px] sm:min-h-[300px]">
+                  <CardContent className="text-center py-8 sm:py-12 px-4">
+                    <h3 className="text-lg sm:text-xl font-semibold mb-2">Ready to Calculate</h3>
+                    <p className="text-muted-foreground max-w-md text-xs sm:text-sm">
+                      Fill in the form above and click "Calculate VRS Compensation" to see your results here.
                     </p>
                   </CardContent>
                 </Card>
@@ -107,9 +107,9 @@ export default function Home() {
           </div>
 
           {/* Footer Note */}
-          <Card className="mt-8 border-amber-200 bg-amber-50 dark:bg-amber-950/20">
-            <CardContent className="pt-6">
-              <p className="text-sm text-center text-muted-foreground">
+          <Card className="mt-4 sm:mt-6 lg:mt-8 border-amber-200 bg-amber-50 dark:bg-amber-950/20">
+            <CardContent className="pt-4 sm:pt-6 px-3 sm:px-6">
+              <p className="text-xs sm:text-sm text-center text-muted-foreground">
                 ⚠️ <strong>Disclaimer:</strong> This calculator provides an estimate based on the Gujarat Pattern formula. 
                 Actual VRS benefits may vary based on company policy, government regulations, and individual circumstances. 
                 Please consult with HR department for official calculations.
@@ -120,8 +120,8 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-gray-100 dark:bg-gray-900 mt-16 py-6">
-        <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
+      <footer className="bg-gray-100 dark:bg-gray-900 mt-8 sm:mt-12 lg:mt-16 py-4 sm:py-6">
+        <div className="container mx-auto px-3 sm:px-4 text-center text-xs sm:text-sm text-muted-foreground">
           <p>© {new Date().getFullYear()} RINL - Rashtriya Ispat Nigam Limited</p>
           <p className="mt-1">For informational purposes only</p>
         </div>

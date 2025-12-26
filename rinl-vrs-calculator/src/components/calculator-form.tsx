@@ -63,23 +63,24 @@ export function CalculatorForm({ onCalculate }: CalculatorFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">{
           <FormField
             control={form.control}
             name="basicPay"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Basic Pay (₹)</FormLabel>
+                <FormLabel className="text-sm">Basic Pay (₹)</FormLabel>
                 <FormControl>
                   <Input 
                     type="number" 
                     placeholder="50000" 
+                    className="text-base"
                     {...field}
                     onChange={(e) => field.onChange(Number(e.target.value) || 0)}
                   />
                 </FormControl>
-                <FormDescription>Your current basic pay</FormDescription>
+                <FormDescription className="text-xs">Your current basic pay</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -90,16 +91,17 @@ export function CalculatorForm({ onCalculate }: CalculatorFormProps) {
             name="stagnationIncrement"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Stagnation Increment (₹)</FormLabel>
+                <FormLabel className="text-sm">Stagnation Increment (₹)</FormLabel>
                 <FormControl>
                   <Input 
                     type="number" 
                     placeholder="5000" 
+                    className="text-base"
                     {...field}
                     onChange={(e) => field.onChange(Number(e.target.value) || 0)}
                   />
                 </FormControl>
-                <FormDescription>Stagnation increment amount</FormDescription>
+                <FormDescription className="text-xs">Stagnation increment amount</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -110,16 +112,17 @@ export function CalculatorForm({ onCalculate }: CalculatorFormProps) {
             name="pp"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Personal Pay (₹)</FormLabel>
+                <FormLabel className="text-sm">Personal Pay (₹)</FormLabel>
                 <FormControl>
                   <Input 
                     type="number" 
                     placeholder="2000" 
+                    className="text-base"
                     {...field}
                     onChange={(e) => field.onChange(Number(e.target.value) || 0)}
                   />
                 </FormControl>
-                <FormDescription>Personal pay component</FormDescription>
+                <FormDescription className="text-xs">Personal pay component</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -130,16 +133,17 @@ export function CalculatorForm({ onCalculate }: CalculatorFormProps) {
             name="da"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Dearness Allowance (₹)</FormLabel>
+                <FormLabel className="text-sm">Dearness Allowance (₹)</FormLabel>
                 <FormControl>
                   <Input 
                     type="number" 
                     placeholder="20000" 
+                    className="text-base"
                     {...field}
                     onChange={(e) => field.onChange(Number(e.target.value) || 0)}
                   />
                 </FormControl>
-                <FormDescription>Current DA amount</FormDescription>
+                <FormDescription className="text-xs">Current DA amount</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -150,14 +154,14 @@ export function CalculatorForm({ onCalculate }: CalculatorFormProps) {
             name="dateOfJoining"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <FormLabel>Date of Joining</FormLabel>
+                <FormLabel className="text-sm">Date of Joining</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
                         variant={"outline"}
                         className={cn(
-                          "w-full pl-3 text-left font-normal",
+                          "w-full pl-3 text-left font-normal text-sm sm:text-base",
                           !field.value && "text-muted-foreground"
                         )}
                       >
@@ -182,7 +186,7 @@ export function CalculatorForm({ onCalculate }: CalculatorFormProps) {
                     />
                   </PopoverContent>
                 </Popover>
-                <FormDescription>When you joined RINL</FormDescription>
+                <FormDescription className="text-xs">When you joined RINL</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -193,14 +197,14 @@ export function CalculatorForm({ onCalculate }: CalculatorFormProps) {
             name="dateOfBirth"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <FormLabel>Date of Birth</FormLabel>
+                <FormLabel className="text-sm">Date of Birth</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
                         variant={"outline"}
                         className={cn(
-                          "w-full pl-3 text-left font-normal",
+                          "w-full pl-3 text-left font-normal text-sm sm:text-base",
                           !field.value && "text-muted-foreground"
                         )}
                       >
@@ -225,7 +229,7 @@ export function CalculatorForm({ onCalculate }: CalculatorFormProps) {
                     />
                   </PopoverContent>
                 </Popover>
-                <FormDescription>Your date of birth</FormDescription>
+                <FormDescription className="text-xs">Your date of birth</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -235,15 +239,15 @@ export function CalculatorForm({ onCalculate }: CalculatorFormProps) {
             control={form.control}
             name="releaseDate"
             render={({ field }) => (
-              <FormItem className="flex flex-col md:col-span-2">
-                <FormLabel>Release Date (Optional)</FormLabel>
+              <FormItem className="flex flex-col sm:col-span-2">
+                <FormLabel className="text-sm">Release Date (Optional)</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
                         variant={"outline"}
                         className={cn(
-                          "w-full pl-3 text-left font-normal",
+                          "w-full pl-3 text-left font-normal text-sm sm:text-base",
                           !field.value && "text-muted-foreground"
                         )}
                       >
@@ -266,7 +270,7 @@ export function CalculatorForm({ onCalculate }: CalculatorFormProps) {
                     />
                   </PopoverContent>
                 </Popover>
-                <FormDescription>
+                <FormDescription className="text-xs">
                   Expected release date (defaults to today if not specified)
                 </FormDescription>
                 <FormMessage />
@@ -275,7 +279,7 @@ export function CalculatorForm({ onCalculate }: CalculatorFormProps) {
           />
         </div>
 
-        <Button type="submit" size="lg" className="w-full">
+        <Button type="submit" size="lg" className="w-full text-sm sm:text-base">
           Calculate VRS Compensation
         </Button>
       </form>
