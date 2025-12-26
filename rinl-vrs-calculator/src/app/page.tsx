@@ -96,7 +96,6 @@ export default function Home() {
               ) : (
                 <Card className="h-full flex items-center justify-center">
                   <CardContent className="text-center py-12">
-                    <div className="text-6xl mb-4">🧮</div>
                     <h3 className="text-xl font-semibold mb-2">Ready to Calculate</h3>
                     <p className="text-muted-foreground max-w-md">
                       Fill in the form on the left and click "Calculate VRS Compensation" to see your results here.
