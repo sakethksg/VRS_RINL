@@ -64,7 +64,7 @@ export function CalculatorForm({ onCalculate }: CalculatorFormProps) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           <FormField
             control={form.control}
             name="basicPay"
@@ -245,7 +245,7 @@ export function CalculatorForm({ onCalculate }: CalculatorFormProps) {
             control={form.control}
             name="releaseDate"
             render={({ field }) => (
-              <FormItem className="flex flex-col sm:col-span-2">
+              <FormItem className="flex flex-col sm:col-span-2 lg:col-span-3">
                 <FormLabel className="text-sm">Release Date (Optional)</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
