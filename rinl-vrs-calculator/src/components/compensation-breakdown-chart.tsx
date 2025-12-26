@@ -27,16 +27,15 @@ export function CompensationBreakdownChart({ result }: CompensationBreakdownChar
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="w-full h-[300px] sm:h-[350px]">
+        <div className="w-full h-[350px] sm:h-[400px]">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
                 data={data}
                 cx="50%"
-                cy="50%"
+                cy="45%"
                 labelLine={false}
-                label={({ name, percent }) => `${name}: ${((percent || 0) * 100).toFixed(1)}%`}
-                outerRadius={80}
+                outerRadius={90}
                 fill="#8884d8"
                 dataKey="value"
               >
@@ -45,7 +44,11 @@ export function CompensationBreakdownChart({ result }: CompensationBreakdownChar
                 ))}
               </Pie>
               <Tooltip formatter={(value) => formatCurrency(Number(value))} />
-              <Legend wrapperStyle={{ fontSize: '12px' }} />
+              <Legend 
+                wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }}
+                layout="horizontal"
+                verticalAlign="bottom"
+              />
             </PieChart>
           </ResponsiveContainer>
         </div>
