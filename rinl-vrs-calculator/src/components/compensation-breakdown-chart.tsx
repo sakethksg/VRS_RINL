@@ -13,9 +13,8 @@ const COLORS = ['#f97316', '#3b82f6', '#10b981'];
 
 export function CompensationBreakdownChart({ result }: CompensationBreakdownChartProps) {
   const data = [
-    { name: 'Completed Service', value: result.compensationCompleted },
-    { name: 'Remaining Service', value: result.compensationLeftover },
-    { name: 'Notice Pay', value: result.noticePay },
+    { name: 'Completed Service (35 days)', value: result.compensation1 },
+    { name: 'Remaining Service (25 days)', value: result.compensation2 },
   ];
 
   return (
@@ -23,7 +22,7 @@ export function CompensationBreakdownChart({ result }: CompensationBreakdownChar
       <CardHeader className="pb-3 sm:pb-6">
         <CardTitle className="text-base sm:text-lg lg:text-xl">Compensation Breakdown</CardTitle>
         <CardDescription className="text-xs sm:text-sm">
-          Visual breakdown of your VRS payout components
+          Visual breakdown of your VRS compensation components
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -57,23 +56,16 @@ export function CompensationBreakdownChart({ result }: CompensationBreakdownChar
           <div className="flex justify-between items-center">
             <span className="flex items-center gap-2">
               <span className="w-3 h-3 rounded-full" style={{ backgroundColor: COLORS[0] }}></span>
-              Completed Service
+              Completed Service (35 days)
             </span>
-            <span className="font-semibold">{formatCurrency(result.compensationCompleted)}</span>
+            <span className="font-semibold">{formatCurrency(result.compensation1)}</span>
           </div>
           <div className="flex justify-between items-center">
             <span className="flex items-center gap-2">
               <span className="w-3 h-3 rounded-full" style={{ backgroundColor: COLORS[1] }}></span>
-              Remaining Service
+              Remaining Service (25 days)
             </span>
-            <span className="font-semibold">{formatCurrency(result.compensationLeftover)}</span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full" style={{ backgroundColor: COLORS[2] }}></span>
-              Notice Pay
-            </span>
-            <span className="font-semibold">{formatCurrency(result.noticePay)}</span>
+            <span className="font-semibold">{formatCurrency(result.compensation2)}</span>
           </div>
         </div>
       </CardContent>

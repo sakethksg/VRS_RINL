@@ -1,71 +1,114 @@
-import { differenceInMonths, addYears } from 'date-fns';
+import { differenceInMonths, differenceInDays } from 'date-fns';
 import type { VRSCalculationInput, VRSCalculationResult } from '@/types';
 
 export function calculateVRSCompensation(input: VRSCalculationInput): VRSCalculationResult {
-  // Total Basic Pay = Basic Pay + SI + PP
-  const totalBasicPay = input.basicPay + input.stagnationIncrement + input.pp;
+  const todayDate = new Date();
   
-  // Current Salary = Total Basic Pay + DA
-  const currentSalary = totalBasicPay + input.da;
+  // Basic + DA
+  const basicPlusDA = input.basic + input.da;
   
-  // Calculate service years
-  const releaseDate = input.releaseDate || new Date();
-  const serviceMonths = differenceInMonths(releaseDate, input.dateOfJoining);
-  const completedYears = Math.floor(serviceMonths / 12);
-  const completedMonths = serviceMonths % 12;
+  // Per day salary (assuming 30 days per month)
+  const perDaySalary = basicPlusDA / 30;
   
-  // Calculate superannuation date (58 years)
-  const superannuationAge = 58;
-  const superannuationDate = addYears(input.dateOfBirth, superannuationAge);
+  // Calculate total Basic + DA until retirement
+  const monthsUntilRetirement = differenceInMonths(input.dateOfRetirement, todayDate);
+  const basicPlusDAUntilRetirement = basicPlusDA * monthsUntilRetirement;
   
-  // Leftover service calculation
-  const leftoverMonths = differenceInMonths(superannuationDate, releaseDate);
-  const leftoverYears = leftoverMonths / 12;
+  // Calculate completed years and months of service
+  const totalServiceMonths = differenceInMonths(todayDate, input.dateOfJoining);
+  const completedYears = Math.floor(totalServiceMonths / 12);
+  const completedMonths = totalServiceMonths % 12;
+  const completedYearsMonths = `${completedYears} years ${completedMonths} months`;
+  // RINL uses years.months format directly as decimal (e.g., 32.10 for 32 years 10 months)
+  const completedYearsDecimal = completedYears + (completedMonths / 100);
   
-  // Gujarat Pattern Calculation
-  // 35 days for completed service + 25 days for leftover service
-  const dailySalary = currentSalary / 30;
+  // Calculate leftover service
+  const monthsLeftOut = differenceInMonths(input.dateOfRetirement, todayDate);
+  const leftoutYears = Math.floor(monthsLeftOut / 12);
+  const leftoutMonths = monthsLeftOut % 12;
+  const leftoutYearsMonths = `${leftoutYears} years ${leftoutMonths} months`;
+  // RINL uses years.months format directly as decimal (e.g., 2.09 for 2 years 9 months)
+  const leftoutYearsDecimal = leftoutYears + (leftoutMonths / 100);
   
-  const compensationCompleted = completedYears * 35 * dailySalary;
-  const compensationLeftover = leftoverYears * 25 * dailySalary;
+  // PF Monthly Contribution (12% of Basic + DA, company contribution)
+  const pfMonthlyContribution = basicPlusDA * 0.12;
   
-  const totalCompensation = compensationCompleted + compensationLeftover;
+  // SBFP Monthly Contribution (3% of Basic + DA, company contribution)
+  const sbfpMonthlyContribution = basicPlusDA * 0.03;
   
-  // Minimum compensation: Rs. 25,000 or 250 days salary (whichever higher)
-  const minimumCompensation = Math.max(25000, 250 * dailySalary);
+  // VRS Compensation - Gujarat Pattern
+  // Compensation 1: 35 days for completed years
+  const compensation1 = perDaySalary * 35 * completedYearsDecimal;
   
-  // Final compensation (use minimum if total is less)
-  const finalCompensation = Math.max(totalCompensation, minimumCompensation);
+  // Compensation 2: 25 days for leftover years
+  const compensation2 = perDaySalary * 25 * leftoutYearsDecimal;
   
-  // Notice Pay (30 days)
-  const noticePay = 30 * dailySalary;
+  // Total Compensation
+  const totalCompensation = compensation1 + compensation2;
   
-  // Calculate current age
-  const currentAge = differenceInMonths(releaseDate, input.dateOfBirth) / 12;
+  // VRS should be less than Basic Plus DA until retirement
+  const vrsCompensationFinal = Math.min(totalCompensation, basicPlusDAUntilRetirement);
   
-  // Calculate monthly salary
-  const monthlySalary = currentSalary;
+  // After Tax: Rs 5 Lakh non-taxable, 32% tax on remaining
+  const taxExemptAmount = 500000;
+  const taxableAmount = Math.max(0, vrsCompensationFinal - taxExemptAmount);
+  const taxAmount = taxableAmount * 0.32;
+  const afterTaxVRS = vrsCompensationFinal - taxAmount;
+  
+  // Bank interest rate (5.5% annually)
+  const bankInterestRate = 0.055;
+  
+  // Monthly interest from VRS money
+  const monthlyInterestFromVRS = (afterTaxVRS * bankInterestRate) / 12;
+  
+  // Matured amount at retirement (compound interest)
+  const yearsUntilRetirement = leftoutYearsDecimal;
+  const maturedAmountAtRetirement = afterTaxVRS * Math.pow(1 + bankInterestRate, yearsUntilRetirement);
+  
+  // Comparison: If employee works till retirement
+  // Future Basic, DA, Perks after 32% tax
+  const futureBasicDAPlusPerks = basicPlusDAUntilRetirement * (1 - 0.32);
+  
+  // Future PF and SBFP (tax exempt at retirement)
+  const futurePFSBFP = (pfMonthlyContribution + sbfpMonthlyContribution) * monthsLeftOut;
+  
+  // Total financials if working till retirement
+  const totalFinancialsIfWorking = futureBasicDAPlusPerks + futurePFSBFP;
+  
+  // Loss calculations
+  const lossInTakingVRS = basicPlusDAUntilRetirement - vrsCompensationFinal;
+  
+  const lossAfterTaxes = totalFinancialsIfWorking - afterTaxVRS;
+  
+  const lossAfterTaxesAndInvestment = totalFinancialsIfWorking - maturedAmountAtRetirement;
   
   return {
     input,
-    currentAge,
-    monthlySalary,
-    totalBasicPay,
-    currentSalary,
-    dailySalary,
-    completedYears,
-    completedMonths,
-    leftoverMonths,
-    leftoverYears,
-    compensationCompleted,
-    compensationLeftover,
+    basicPlusDA,
+    perDaySalary,
+    basicPlusDAUntilRetirement,
+    todayDate,
+    completedYearsMonths,
+    completedYearsDecimal,
+    monthsLeftOut,
+    leftoutYearsMonths,
+    leftoutYearsDecimal,
+    pfMonthlyContribution,
+    sbfpMonthlyContribution,
+    compensation1,
+    compensation2,
     totalCompensation,
-    minimumCompensation,
-    finalCompensation,
-    noticePay,
-    totalPayout: finalCompensation + noticePay,
-    superannuationDate,
-    releaseDate
+    vrsCompensationFinal,
+    afterTaxVRS,
+    bankInterestRate,
+    monthlyInterestFromVRS,
+    maturedAmountAtRetirement,
+    futureBasicDAPlusPerks,
+    futurePFSBFP,
+    totalFinancialsIfWorking,
+    lossInTakingVRS,
+    lossAfterTaxes,
+    lossAfterTaxesAndInvestment,
   };
 }
 

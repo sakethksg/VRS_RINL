@@ -3,9 +3,7 @@
 import { useState } from "react";
 import { CalculatorForm } from "@/components/calculator-form";
 import { ResultsDisplay } from "@/components/results-display";
-import { ScenarioComparison } from "@/components/scenario-comparison";
 import { CompensationBreakdownChart } from "@/components/compensation-breakdown-chart";
-import { PayoutVsAgeChart } from "@/components/payout-vs-age-chart";
 import { InvestmentSimulator } from "@/components/investment-simulator";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -61,9 +59,9 @@ export default function Home() {
           </Card>
 
           {/* Two Column Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
             {/* Left Column - Form */}
-            <div>
+            <div className="lg:col-span-2">
               <Card>
                 <CardHeader className="pb-3 sm:pb-6">
                   <CardTitle className="text-base sm:text-lg lg:text-xl">Employee Details</CardTitle>
@@ -82,13 +80,13 @@ export default function Home() {
                 <CardContent className="space-y-2 text-xs sm:text-sm px-3 sm:px-6">
                   <p>
                     <strong>Gujarat Pattern:</strong> 35 days salary for each completed year of service + 
-                    25 days salary for each year of remaining service (until superannuation at 58 years)
+                    25 days salary for each year of remaining service until retirement
                   </p>
                   <p>
-                    <strong>Minimum Guarantee:</strong> ₹25,000 or 250 days salary, whichever is higher
+                    <strong>Tax Benefit:</strong> ₹5,00,000 is tax-exempt, 32% tax on remaining amount
                   </p>
                   <p>
-                    <strong>Notice Pay:</strong> Additional 30 days salary
+                    <strong>PF & SBFP:</strong> Company contributions (12% + 3%) are calculated for comparison
                   </p>
                 </CardContent>
               </Card>
@@ -118,28 +116,17 @@ export default function Home() {
               
               {/* Section Header */}
               <div className="text-center">
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2">Advanced Analysis Tools</h2>
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2">Detailed Financial Analysis</h2>
                 <p className="text-muted-foreground text-sm sm:text-base max-w-2xl mx-auto">
-                  Use these tools to make an informed decision about your VRS
+                  Understanding the complete financial impact of VRS decision
                 </p>
               </div>
-
-              {/* Scenario Comparison */}
-              <ScenarioComparison input={result.input} />
 
               {/* Compensation Breakdown Chart */}
               <CompensationBreakdownChart result={result} />
 
-              {/* Payout vs Age Analysis */}
-              <PayoutVsAgeChart
-                currentAge={result.currentAge}
-                retirementAge={58}
-                vrsAmount={result.totalCompensation}
-                monthlySalary={result.monthlySalary}
-              />
-
               {/* Investment Simulator */}
-              <InvestmentSimulator vrsAmount={result.totalCompensation + result.noticePay} />
+              <InvestmentSimulator vrsAmount={result.afterTaxVRS} />
             </div>
           )}
         </div>
